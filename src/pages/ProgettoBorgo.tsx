@@ -20,15 +20,15 @@ const storyData = [
   {
     id: "step-1-2",
     bg: "https://res.cloudinary.com/tigosanchez/image/upload/v1776528906/GGM_ACADEMY_-3.jpg",
-    title: "CITTÀ SANT'ANGELO: LABORATORIO VIVENTE.",
-    text: "Non vi chiediamo di essere solo \"clienti\" di una tecnologia. Vi proponiamo di diventarne il Centro Nevralgico Europeo. Trasformiamo Città Sant'Angelo nel primo Borgo Geoscientifico: un'aula a cielo aperto che ospita i migliori talenti internazionali per radiografare la vostra storia e progettare il vostro futuro."
+    title: "CITTÀ SANT'ANGELO: LA RESIDENZA GEOSCIENTIFICA.",
+    text: "Non vi chiediamo di essere solo \"clienti\" di una tecnologia. Vi proponiamo di diventarne il Centro Nevralgico Europeo. Trasformiamo Città Sant'Angelo nella prima Residenza Geoscientifica: un'aula a cielo aperto che ospita i migliori talenti internazionali per radiografare la vostra storia e progettare il vostro futuro."
   },
   // SEZIONE 2
   {
     id: "step-2-1",
     bg: `${BASE_URL}/GGM_ACADEMY_-15.jpg`,
-    title: "TEMPO ED OSPITALITÀ DIFFUSA.",
-    text: "Chiediamo al Comune di co-investire nella logistica primaria per cicli variabili da 1 a 6 mesi (prorogabili). Questo si traduce in ospitalità residenziale per gruppi ristretti (da 2 a 8 partecipanti nazionali e internazionali) e nel supporto per convenzioni a km zero con l'economia locale: bistrot, locande, pizzerie e botteghe cittadine."
+    title: "HOSPITALITY E RESIDENCY DIFFUSA.",
+    text: "Chiediamo al Comune di co-investire nella logistica primaria per cicli variabili da 1 a 6 mesi (prorogabili). Questo si traduce in ospitalità residenziale (Residency) per gruppi ristretti (da 2 a 8 partecipanti nazionali e internazionali) e nel supporto per convenzioni Hospitality a km zero con l'economia locale: bistrot, locande e botteghe cittadine."
   },
   {
     id: "step-2-2",
@@ -98,6 +98,12 @@ const storyData = [
     bg: `${BASE_URL}/GGM_ACADEMY_-13.jpg`,
     title: "PONTE CON L'INDUSTRIA E L'AFRICA.",
     text: "Metteremo a disposizione il nostro network globale. Attiveremo un canale diretto di scambio con la nostra Divisione in Zambia e le università africane, portando parallelamente a Città Sant'Angelo i nostri top client e player industriali internazionali."
+  },
+  {
+    id: "step-hub-network",
+    bg: `${BASE_URL}/GGM_ACADEMY_-11.jpg`,
+    title: "HUB TO NETWORK.",
+    text: "Il Comune Virtuoso diventa capofila, estendendo la protezione del Digital Twin ai borghi gemellati o limitrofi. Una partnership strategica che permette di accorpare piccoli villaggi ricchi di storia e peculiarità ma privi di budget autonomo, creando una rete geoscientifica integrata che valorizza l'intero ecosistema territoriale senza lasciare nessuno indietro."
   },
   // SEZIONE 6 & 7 COMBINED (Only one black space at the very end before the CTA)
   {
