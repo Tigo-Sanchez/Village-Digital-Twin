@@ -19,7 +19,7 @@ const storyData = [
   },
   {
     id: "step-1-2",
-    bg: `${BASE_URL}/GGM_ACADEMY_-2.jpg`,
+    bg: "https://res.cloudinary.com/tigosanchez/image/upload/v1776528906/GGM_ACADEMY_-3.jpg",
     title: "CITTÀ SANT'ANGELO: LABORATORIO VIVENTE.",
     text: "Non vi chiediamo di essere solo \"clienti\" di una tecnologia. Vi proponiamo di diventarne il Centro Nevralgico Europeo. Trasformiamo Città Sant'Angelo nel primo Borgo Geoscientifico: un'aula a cielo aperto che ospita i migliori talenti internazionali per radiografare la vostra storia e progettare il vostro futuro."
   },
@@ -57,9 +57,9 @@ const storyData = [
   },
   {
     id: "step-3-2",
-    bg: `${BASE_URL}/GGM_ACADEMY_-3.jpg`,
-    title: "I 3 MOMENTI DELLA TRASPARENZA.",
-    text: "L'innovazione si condivide con i cittadini. Struttureremo l'attività attorno a 3 Eventi Pubblici Ufficiali: 1) Presentazione di avvio lavori, 2) Progressione di metà percorso (mid-term), e 3) Restituzione Finale dei risultati alla comunità e alla stampa locale."
+    bg: "black",
+    title: "TRASPARENZA ASSOLUTA.",
+    text: "L'innovazione non si impone, si vive insieme. Trasformeremo i cantieri digitali in un evento collettivo attraverso 3 appuntamenti chiave: il Launch Ufficiale per svelare la visione, il Mid-Term Check per toccare con mano i progressi, e il Grand Reveal finale per consegnare il futuro alla comunità e alla stampa."
   },
   // SEZIONE 4
   {
@@ -144,39 +144,20 @@ export default function ProgettoBorgo() {
         const isBlack = storyData[index]?.bg === 'black';
 
         // Background handling
-        if (index > 0) {
-          if (isBlack) {
-            let prevBgIndex = index - 1;
-            while (prevBgIndex >= 0 && !imagesRef.current[prevBgIndex]) prevBgIndex--;
-            const prevBg = imagesRef.current[prevBgIndex];
-            
-            if (prevBg) {
-              gsap.to(prevBg, {
-                opacity: 0,
-                ease: "none",
-                scrollTrigger: {
-                  trigger: step,
-                  start: "top 80%",
-                  end: "top 20%",
-                  scrub: true,
-                }
-              });
-            }
-          } else if (bg) {
-            gsap.fromTo(bg,
-              { opacity: 0 },
-              {
-                opacity: 1,
-                ease: "none",
-                scrollTrigger: {
-                  trigger: step,
-                  start: "top 80%",
-                  end: "top 20%",
-                  scrub: true,
-                }
+        if (index > 0 && bg) {
+          gsap.fromTo(bg,
+            { opacity: 0 },
+            {
+              opacity: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: step,
+                start: "top 80%",
+                end: "top 20%",
+                scrub: true,
               }
-            );
-          }
+            }
+          );
         }
 
         // --- NEW TEXT ANIMATION LOGIC (Unified Timeline with Scrub for reverse support) ---
@@ -317,18 +298,18 @@ export default function ProgettoBorgo() {
       {/* Fixed Background Images Container */}
       <div className="fixed top-0 left-0 w-full h-full z-0 bg-[#050505]">
         {storyData.map((step, index) => {
-           if (step.bg === 'black') return null; // Don't render black images, we use bg color
+           const isBlack = step.bg === 'black';
            return (
             <div
               key={`bg-${step.id}`}
               ref={(el) => (imagesRef.current[index] = el)}
-              className="absolute top-0 left-0 w-full h-full bg-cover bg-center"
+              className={`absolute top-0 left-0 w-full h-full ${isBlack ? 'bg-[#050505]' : 'bg-cover bg-center'}`}
               style={{ 
-                backgroundImage: `url(${step.bg})`,
+                backgroundImage: isBlack ? 'none' : `url(${step.bg})`,
                 opacity: index === 0 ? 1 : 0 
               }}
             >
-              <div className="absolute inset-0 bg-black/50 md:bg-black/40"></div>
+              {!isBlack && <div className="absolute inset-0 bg-black/50 md:bg-black/40"></div>}
             </div>
           );
         })}
@@ -425,7 +406,7 @@ export default function ProgettoBorgo() {
                   {step.text && (
                     <div className="flex flex-col gap-4 md:gap-8">
                        <div className="w-12 h-1 bg-[#06b6d4] rounded-full"></div>
-                       <p className="text-sm sm:text-base md:text-xl lg:text-2xl leading-relaxed font-light text-white/80">
+                       <p className="text-sm sm:text-base md:text-xl lg:text-2xl leading-relaxed font-normal text-white/80">
                          {step.text}
                        </p>
                     </div>
