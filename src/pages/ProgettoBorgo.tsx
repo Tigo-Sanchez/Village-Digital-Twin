@@ -143,11 +143,9 @@ export default function ProgettoBorgo() {
         const bg = imagesRef.current[index];
         const isBlack = storyData[index]?.bg === 'black';
 
-        // What if it's the black step? We fade OUT the previous background.
-        // What if it's an image after the black step? We fade IN the new background.
+        // Background handling
         if (index > 0) {
           if (isBlack) {
-            // Find the previous background
             let prevBgIndex = index - 1;
             while (prevBgIndex >= 0 && !imagesRef.current[prevBgIndex]) prevBgIndex--;
             const prevBg = imagesRef.current[prevBgIndex];
@@ -158,8 +156,8 @@ export default function ProgettoBorgo() {
                 ease: "none",
                 scrollTrigger: {
                   trigger: step,
-                  start: "top 75%",
-                  end: "top 25%",
+                  start: "top 80%",
+                  end: "top 20%",
                   scrub: true,
                 }
               });
@@ -172,8 +170,8 @@ export default function ProgettoBorgo() {
                 ease: "none",
                 scrollTrigger: {
                   trigger: step,
-                  start: "top 75%",
-                  end: "top 25%",
+                  start: "top 80%",
+                  end: "top 20%",
                   scrub: true,
                 }
               }
@@ -181,34 +179,45 @@ export default function ProgettoBorgo() {
           }
         }
 
+        // --- NEW TEXT ANIMATION LOGIC (Unified Timeline with Scrub for reverse support) ---
         const textBlock = step.querySelector(".text-block");
-        if (textBlock) {
-          gsap.fromTo(textBlock,
-            { opacity: 0, y: 30 },
-            {
-              opacity: 1,
-              y: 0,
-              ease: "power2.out",
-              duration: 1.2,
-              scrollTrigger: {
-                trigger: step,
-                start: "top 80%", // trigger earlier on mobile
-              }
+        const stepTitle = step.querySelector(".step-title");
+
+        if (textBlock || stepTitle) {
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: step,
+              start: "top 90%",
+              end: index === storyData.length - 1 ? "bottom 95%" : "bottom 20%",
+              scrub: 1,
+              toggleActions: "play reverse play reverse",
             }
-          );
-          
-          if(index !== storyData.length - 1) { // don't fade out the last cta too early
-            gsap.to(textBlock, {
-              opacity: 0,
-              y: -50,
-              ease: "power2.in",
-              scrollTrigger: {
-                trigger: step,
-                start: "bottom 40%", // increased from 30%
-                end: "bottom top",
-                scrub: true,
-              }
-            });
+          });
+
+          // Phase 1: Reveal Title first (the "breathing room" part)
+          if (stepTitle) {
+            tl.fromTo(stepTitle, 
+              { opacity: 0, y: 40, scale: 0.95 }, 
+              { opacity: 1, y: 0, scale: 1, ease: "power2.out" }
+            );
+          }
+
+          // Phase 2: Reveal Text Block (staggered)
+          if (textBlock) {
+            tl.fromTo(textBlock, 
+              { opacity: 0, y: 50 }, 
+              { opacity: 1, y: 0, ease: "power2.out" },
+              "-=0.2"
+            );
+          }
+
+          // Phase 3: Hold visibility
+          tl.to({}, { duration: 1 });
+
+          // Phase 4: Fade out at the end of the section (only if not the last section)
+          if (index !== storyData.length - 1) {
+             if (textBlock) tl.to(textBlock, { opacity: 0, y: -40, ease: "power2.in" });
+             if (stepTitle) tl.to(stepTitle, { opacity: 0, y: -30, ease: "power2.in" }, "-=0.3");
           }
         }
       });
@@ -361,22 +370,29 @@ export default function ProgettoBorgo() {
                  </div>
               </div>
             ) : layoutStyle === 'hero' ? (
-              <div className="text-block w-full max-w-6xl mx-auto text-center relative z-20 flex flex-col items-center justify-center mt-12 md:mt-0">
-                <div className="inline-block mb-6 md:mb-10 px-4 py-1.5 rounded-full border border-white/20 bg-white/5 backdrop-blur-md">
-                   <span className="text-[10px] md:text-sm font-mono tracking-[0.2em] uppercase text-white/80">Progetto Borgo Geoscientifico</span>
-                </div>
-                <h1 className="text-[2.5rem] sm:text-6xl leading-[1.1] md:text-8xl lg:text-[8rem] font-black tracking-tighter drop-shadow-2xl text-white uppercase mb-8" style={{ fontFamily: 'Montserrat, sans-serif' }}>
-                  {step.superTitle}
-                </h1>
-                <p className="text-lg md:text-3xl leading-relaxed font-light text-white/90 drop-shadow-lg max-w-4xl mx-auto">
-                  {step.text}
-                </p>
-              </div>
-            ) : layoutStyle === 'cta' ? (
-              <div className="text-block w-full max-w-4xl mx-auto text-center relative z-20 bg-black/50 backdrop-blur-2xl border border-white/10 border-t-white/20 rounded-3xl p-8 md:p-20 shadow-[0_16px_64px_-12px_rgba(0,0,0,0.8)]">
-                  <h1 className="text-3xl sm:text-4xl md:text-7xl font-black tracking-tighter leading-[1.1] drop-shadow-2xl text-white uppercase mb-6 md:mb-8" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+              <div className="w-full max-w-7xl mx-auto flex flex-col items-center justify-center relative z-20 mt-12 md:mt-0">
+                <div className="step-title flex flex-col items-center text-center">
+                  <div className="inline-block mb-6 md:mb-10 px-4 py-1.5 rounded-full border border-white/20 bg-white/5 backdrop-blur-md">
+                    <span className="text-[10px] md:text-sm font-mono tracking-[0.2em] uppercase text-white/80">Progetto Borgo Geoscientifico</span>
+                  </div>
+                  <h1 className="text-[2.8rem] sm:text-6xl leading-[0.95] md:text-8xl lg:text-[9rem] font-black tracking-tighter drop-shadow-2xl text-white uppercase mb-8" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                     {step.superTitle}
                   </h1>
+                </div>
+                <div className="text-block text-center mt-4">
+                  <p className="text-lg md:text-3xl leading-relaxed font-light text-white/90 drop-shadow-lg max-w-4xl mx-auto">
+                    {step.text}
+                  </p>
+                </div>
+              </div>
+            ) : layoutStyle === 'cta' ? (
+              <div className="w-full max-w-6xl mx-auto flex flex-col items-center justify-center relative z-20">
+                <div className="step-title text-center mb-6">
+                   <h1 className="text-[2.5rem] sm:text-4xl md:text-8xl font-black tracking-tighter leading-[0.9] drop-shadow-2xl text-white uppercase mb-4" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                      {step.superTitle}
+                   </h1>
+                </div>
+                <div className="text-block w-full max-w-4xl mx-auto text-center bg-black/60 backdrop-blur-3xl border border-white/10 border-t-white/20 rounded-3xl p-8 md:p-20 shadow-[0_16px_64px_-12px_rgba(0,0,0,0.8)]">
                   <p className="text-sm sm:text-base md:text-2xl leading-relaxed font-light text-white/80 drop-shadow-lg mb-8 md:mb-12">
                     {step.text}
                   </p>
@@ -393,23 +409,26 @@ export default function ProgettoBorgo() {
                       </a>
                     </Link>
                   </div>
+                </div>
               </div>
             ) : (
-              // Glass Blocks
-              <div className={`text-block w-full max-w-2xl relative z-20 bg-[#050505]/40 backdrop-blur-2xl border border-white/10 border-t-white/20 rounded-3xl p-6 md:p-14 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] \${layoutStyle === 'glass-left' ? 'mr-auto' : 'ml-auto'}`}>
-                <div className="flex flex-col gap-3 sm:gap-4 md:gap-6">
-                  {step.title && (
-                    <h2 className="text-xl sm:text-2xl md:text-5xl font-bold tracking-tight uppercase leading-[1.1] text-white" style={{ fontFamily: 'Montserrat, sans-serif' }}>
+              // Standard step with breathing room (Title then Glass Block)
+              <div className={`w-full max-w-7xl mx-auto flex flex-col ${layoutStyle === 'glass-right' ? 'items-end' : 'items-start'}`}>
+                {step.title && (
+                  <div className={`step-title mb-8 md:mb-16 max-w-4xl ${layoutStyle === 'glass-right' ? 'text-right' : 'text-left'}`}>
+                    <h2 className="text-[2.2rem] sm:text-5xl md:text-8xl font-black tracking-tighter leading-[0.95] text-white uppercase drop-shadow-2xl" style={{ fontFamily: 'Montserrat, sans-serif' }}>
                       {step.title}
                     </h2>
-                  )}
+                  </div>
+                )}
+                <div className={`text-block w-full max-w-2xl relative z-20 bg-[#060606]/40 backdrop-blur-2xl border border-white/10 border-t-white/20 rounded-3xl p-6 md:p-14 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] ${layoutStyle === 'glass-left' ? 'mr-auto' : 'ml-auto'}`}>
                   {step.text && (
-                    <div className="w-8 sm:w-12 h-0.5 bg-[#06b6d4] rounded-full my-1 md:my-2"></div>
-                  )}
-                  {step.text && (
-                    <p className="text-sm sm:text-base md:text-xl lg:text-2xl leading-relaxed font-light text-white/80">
-                      {step.text}
-                    </p>
+                    <div className="flex flex-col gap-4 md:gap-8">
+                       <div className="w-12 h-1 bg-[#06b6d4] rounded-full"></div>
+                       <p className="text-sm sm:text-base md:text-xl lg:text-2xl leading-relaxed font-light text-white/80">
+                         {step.text}
+                       </p>
+                    </div>
                   )}
                 </div>
               </div>
