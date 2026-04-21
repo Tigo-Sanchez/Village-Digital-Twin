@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'wouter';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -1283,9 +1284,11 @@ export default function App() {
                  <button className="w-full border border-white bg-white text-black py-4 rounded-full font-semibold hover:bg-transparent hover:text-white transition-all text-sm tracking-wide">
                     Attiva il Gemello Digitale
                  </button>
-                 <button className="w-full border border-white/20 bg-transparent text-white py-4 rounded-full font-medium hover:bg-white/5 hover:border-white/40 transition-all text-sm tracking-wide">
-                    Progetto Borgo Geoscientifico
-                 </button>
+                 <Link href="/progetto-borgo">
+                    <button className="w-full border border-white/20 bg-transparent text-white py-4 rounded-full font-medium hover:bg-white/5 hover:border-white/40 transition-all text-sm tracking-wide">
+                       Progetto Borgo Geoscientifico
+                    </button>
+                 </Link>
               </div>
            </div>
 
@@ -2385,34 +2388,38 @@ export default function App() {
                  </span>
               </button>
 
-              <button className="group relative w-full overflow-hidden rounded-full bg-transparent border border-white/20 text-white font-medium text-base py-4 px-8 transition-all hover:border-white/40 hover:bg-white/[0.03] active:scale-[0.98]">
-                 <span className="relative flex items-center justify-center gap-3">
-                   Progetto Borgo Geoscientifico
-                 </span>
-              </button>
+              <Link href="/progetto-borgo">
+                 <button className="group relative w-full overflow-hidden rounded-full bg-transparent border border-white/20 text-white font-medium text-base py-4 px-8 transition-all hover:border-white/40 hover:bg-white/[0.03] active:scale-[0.98]">
+                    <span className="relative flex items-center justify-center gap-3">
+                      Progetto Borgo Geoscientifico
+                    </span>
+                 </button>
+              </Link>
             </div>
             
             <div className="w-px h-16 md:h-24 bg-gradient-to-t from-transparent to-white/10 mt-12"></div>
           </div>
 
-          <div id="s13-big-logo" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 opacity-0 pointer-events-none w-full flex flex-col items-center justify-center px-6 mt-0 md:mt-12">
+          <div id="s13-big-logo" className="absolute top-[45%] md:top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 opacity-0 pointer-events-none w-full flex flex-col items-center justify-center px-6 mt-0">
             <img 
               src="https://images.squarespace-cdn.com/content/v1/62963b756bf2c45d308b1e5a/633b892b-f434-41d6-8a93-80f669f4421e/GGM+EARTH+LOGO+CLAIM+-+ALPHA.png?format=1500w" 
               alt="GGM.EARTH" 
-              className="w-full max-w-sm md:max-w-2xl lg:max-w-4xl brightness-0 invert object-contain drop-shadow-2xl mb-8 md:mb-12" 
+              className="w-full max-w-[280px] sm:max-w-md md:max-w-2xl lg:max-w-3xl brightness-0 invert object-contain drop-shadow-2xl mb-8 md:mb-12" 
             />
-            <div className="flex flex-col sm:flex-row w-full max-w-[280px] sm:max-w-md gap-3 mx-auto mt-4 pointer-events-auto">
-              <button className="flex-1 overflow-hidden rounded-full bg-white text-black font-semibold text-xs py-3 px-4 transition-transform hover:scale-[1.05] active:scale-[0.95]">
+            <div className="flex flex-col sm:flex-row w-full max-w-[280px] sm:max-w-[400px] gap-3 sm:gap-4 mx-auto mt-2 md:mt-4 pointer-events-auto">
+              <button className="w-full sm:flex-1 overflow-hidden rounded-full bg-white text-black font-semibold text-xs md:text-sm py-4 md:py-3 px-6 transition-transform hover:scale-[1.05] active:scale-[0.95]">
                  Attiva Gemello
               </button>
-              <button className="flex-1 overflow-hidden rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white font-medium text-xs py-3 px-4 transition-all hover:bg-white/10 active:scale-[0.95]">
-                 Progetto Borgo
-              </button>
+              <Link href="/progetto-borgo" className="w-full sm:flex-1">
+                 <button className="w-full overflow-hidden rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white font-medium text-xs md:text-sm py-4 md:py-3 px-6 transition-all hover:bg-white/10 active:scale-[0.95]">
+                    Progetto Borgo
+                 </button>
+              </Link>
             </div>
           </div>
 
           {/* Footer Area */}
-          <footer className="w-full absolute bottom-8 left-0 text-center flex flex-col items-center justify-center px-6 z-10 pointer-events-none">
+          <footer className="w-full absolute bottom-6 md:bottom-8 left-0 text-center flex flex-col items-center justify-center px-6 z-10 pointer-events-none">
              <div className="flex items-center gap-4 text-[10px] md:text-xs uppercase tracking-widest text-white/30 font-mono">
                <span>© {new Date().getFullYear()} GGM.EARTH</span>
                <span className="w-1 h-1 rounded-full bg-white/20"></span>
