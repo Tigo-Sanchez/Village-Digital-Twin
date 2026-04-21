@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'wouter';
+import { ContactModal } from './components/ContactModal';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,6 +23,7 @@ export default function App() {
   const canvasRef13 = useRef<HTMLCanvasElement>(null);
   const [isIdle, setIsIdle] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero-container');
   const [isAtEnd, setIsAtEnd] = useState(false);
 
@@ -1281,8 +1283,11 @@ export default function App() {
               </div>
 
               <div className="space-y-4">
-                 <button className="w-full border border-white bg-white text-black py-4 rounded-full font-semibold hover:bg-transparent hover:text-white transition-all text-sm tracking-wide">
-                    Attiva il Gemello Digitale
+                 <button 
+                  onClick={() => setIsContactModalOpen(true)}
+                  className="w-full border border-white bg-white text-black py-4 rounded-full font-semibold hover:bg-transparent hover:text-white transition-all text-sm tracking-wide"
+                 >
+                    Contatta il Team
                  </button>
                  <Link href="/progetto-borgo">
                     <button className="w-full border border-white/20 bg-transparent text-white py-4 rounded-full font-medium hover:bg-white/5 hover:border-white/40 transition-all text-sm tracking-wide">
@@ -2381,10 +2386,13 @@ export default function App() {
             </p>
 
             <div className="flex flex-col w-full max-w-md md:max-w-lg gap-4 mx-auto">
-              <button className="group relative w-full overflow-hidden rounded-full bg-white text-black font-semibold text-base py-4 px-8 transition-transform hover:scale-[1.02] active:scale-[0.98]">
+              <button 
+                onClick={() => setIsContactModalOpen(true)}
+                className="group relative w-full overflow-hidden rounded-full bg-white text-black font-semibold text-base py-4 px-8 transition-transform hover:scale-[1.02] active:scale-[0.98]"
+              >
                  <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-gray-100 to-white opacity-0 group-hover:opacity-100 transition-opacity"></div>
                  <span className="relative flex items-center justify-center gap-3">
-                   Attiva il Gemello Digitale
+                   Contatta il Team
                  </span>
               </button>
 
@@ -2407,8 +2415,11 @@ export default function App() {
               className="w-full max-w-[280px] sm:max-w-md md:max-w-2xl lg:max-w-3xl brightness-0 invert object-contain drop-shadow-2xl mb-8 md:mb-12" 
             />
             <div className="flex flex-col sm:flex-row w-full max-w-[280px] sm:max-w-[400px] gap-3 sm:gap-4 mx-auto mt-2 md:mt-4 pointer-events-auto">
-              <button className="w-full sm:flex-1 overflow-hidden rounded-full bg-white text-black font-semibold text-xs md:text-sm py-4 md:py-3 px-6 transition-transform hover:scale-[1.05] active:scale-[0.95]">
-                 Attiva Gemello
+              <button 
+                onClick={() => setIsContactModalOpen(true)}
+                className="w-full sm:flex-1 overflow-hidden rounded-full bg-white text-black font-semibold text-xs md:text-sm py-4 md:py-3 px-6 transition-transform hover:scale-[1.05] active:scale-[0.95]"
+              >
+                 Contatta il Team
               </button>
               <Link href="/progetto-borgo" className="w-full sm:flex-1">
                  <button className="w-full overflow-hidden rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white font-medium text-xs md:text-sm py-4 md:py-3 px-6 transition-all hover:bg-white/10 active:scale-[0.95]">
@@ -2420,14 +2431,22 @@ export default function App() {
 
           {/* Footer Area */}
           <footer className="w-full absolute bottom-6 md:bottom-8 left-0 text-center flex flex-col items-center justify-center px-6 z-10 pointer-events-none">
-             <div className="flex items-center gap-4 text-[10px] md:text-xs uppercase tracking-widest text-white/30 font-mono">
+             <div className="flex items-center gap-2 md:gap-4 text-[10px] md:text-xs uppercase tracking-widest text-white/30 font-mono">
                <span>© {new Date().getFullYear()} GGM.EARTH</span>
                <span className="w-1 h-1 rounded-full bg-white/20"></span>
-               <span>Tutti i diritti riservati</span>
+               <a href="mailto:global@ggm.earth" className="pointer-events-auto hover:text-white/80 transition-colors">global@ggm.earth</a>
+               <span className="w-1 h-1 rounded-full bg-white/20 hidden md:block"></span>
+               <span className="hidden md:inline">Tutti i diritti riservati</span>
              </div>
           </footer>
         </div>
       </div>
+      
+      {/* Contact Modal */}
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </div>
   );
 }

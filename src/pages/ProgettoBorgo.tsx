@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'wouter';
 import { Menu, X } from 'lucide-react';
+import { ContactModal } from '../components/ContactModal';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -132,6 +133,7 @@ export default function ProgettoBorgo() {
   const containerRef = useRef<HTMLDivElement>(null);
   const imagesRef = useRef<(HTMLDivElement | null)[]>([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -256,22 +258,17 @@ export default function ProgettoBorgo() {
         <div className="w-full md:w-[60vw] lg:w-[65vw] px-6 md:px-16 pt-24 md:pt-[120px] pb-12 flex flex-col items-start md:border-r border-white/5 md:overflow-y-auto">
            <span className="text-white/30 text-xs font-mono uppercase tracking-[0.3em] mb-8 md:mb-12 block">Index</span>
            <nav className="flex flex-col gap-6 w-full max-w-2xl">
-            {[
-              { href: '/', label: 'Torna alla Landing Page' },
-              { href: 'mailto:contact@ggm.earth', label: 'Contatta il Team' }
-            ].map((item, i) => (
-              item.href.startsWith('/') ? (
-                <Link key={i} href={item.href}>
-                  <a className="text-2xl md:text-3xl lg:text-4xl text-left font-light text-white/50 hover:text-white hover:translate-x-4 transition-all duration-300 w-full border-b border-white/5 pb-4 tracking-tight block">
-                    {item.label}
-                  </a>
-                </Link>
-              ) : (
-                <a key={i} href={item.href} className="text-2xl md:text-3xl lg:text-4xl text-left font-light text-white/50 hover:text-white hover:translate-x-4 transition-all duration-300 w-full border-b border-white/5 pb-4 tracking-tight block">
-                  {item.label}
+              <Link href="/">
+                <a className="text-2xl md:text-3xl lg:text-4xl text-left font-light text-white/50 hover:text-white hover:translate-x-4 transition-all duration-300 w-full border-b border-white/5 pb-4 tracking-tight block">
+                  Torna alla Landing Page
                 </a>
-              )
-            ))}
+              </Link>
+              <button 
+                onClick={() => { setIsMenuOpen(false); setIsContactModalOpen(true); }}
+                className="text-2xl md:text-3xl lg:text-4xl text-left font-light text-white/50 hover:text-white hover:translate-x-4 transition-all duration-300 w-full border-b border-white/5 pb-4 tracking-tight block"
+              >
+                Contatta il Team
+              </button>
           </nav>
         </div>
 
@@ -284,6 +281,17 @@ export default function ProgettoBorgo() {
 
                  <a href="https://ggm.earth" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-[#06b6d4] hover:text-cyan-300 hover:underline underline-offset-4 transition-colors text-sm font-medium">
                     Visita ggm.earth ↗
+                 </a>
+              </div>
+              <div className="space-y-4">
+                 <button 
+                  onClick={() => setIsContactModalOpen(true)}
+                  className="w-full border border-white bg-white text-black py-4 rounded-full font-semibold hover:bg-transparent hover:text-white transition-all text-sm tracking-wide"
+                 >
+                    Fissa un Incontro
+                 </button>
+                 <a href="mailto:global@ggm.earth" className="w-full text-center inline-block border border-white/20 bg-transparent text-white py-4 rounded-full font-medium hover:bg-white/5 hover:border-white/40 transition-all text-sm tracking-wide">
+                    global@ggm.earth
                  </a>
               </div>
            </div>
@@ -373,9 +381,12 @@ export default function ProgettoBorgo() {
                     {step.text}
                   </p>
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6">
-                    <a href="mailto:contact@ggm.earth" className="inline-flex items-center justify-center bg-white text-black font-bold tracking-widest uppercase text-[10px] sm:text-xs md:text-base px-6 sm:px-8 md:px-10 py-3 md:py-5 rounded-full hover:bg-gray-200 transition-all hover:scale-105 active:scale-95 duration-300 w-full sm:w-auto">
+                    <button 
+                      onClick={() => setIsContactModalOpen(true)}
+                      className="inline-flex items-center justify-center bg-white text-black font-bold tracking-widest uppercase text-[10px] sm:text-xs md:text-base px-6 sm:px-8 md:px-10 py-3 md:py-5 rounded-full hover:bg-gray-200 transition-all hover:scale-105 active:scale-95 duration-300 w-full sm:w-auto"
+                    >
                       {step.action}
-                    </a>
+                    </button>
                     <Link href="/">
                       <a className="inline-flex items-center justify-center bg-transparent border border-white/30 text-white font-semibold tracking-widest uppercase text-[9px] sm:text-[10px] md:text-sm px-4 sm:px-6 md:px-8 py-2 md:py-3.5 rounded-full hover:bg-white/10 transition-all hover:scale-105 active:scale-95 duration-300 w-full sm:w-auto">
                         Digital Twin ↗
@@ -408,10 +419,18 @@ export default function ProgettoBorgo() {
       </div>
       
       <div className="h-40 w-full bg-[#060606] relative z-10 flex items-center justify-center">
-        <div className="flex items-center gap-4 text-[10px] md:text-xs uppercase tracking-widest text-white/30 font-mono">
+        <div className="flex items-center gap-2 md:gap-4 text-[10px] md:text-xs uppercase tracking-widest text-white/30 font-mono">
            <span>© {new Date().getFullYear()} GGM.EARTH</span>
+           <span className="w-1 h-1 rounded-full bg-white/20"></span>
+           <a href="mailto:global@ggm.earth" className="hover:text-white/80 transition-colors">global@ggm.earth</a>
         </div>
       </div>
+      
+      {/* Contact Modal */}
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </div>
   );
 }
