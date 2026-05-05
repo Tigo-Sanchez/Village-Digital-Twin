@@ -1284,7 +1284,10 @@ export default function App() {
 
               <div className="space-y-4">
                  <button 
-                  onClick={() => setIsContactModalOpen(true)}
+                  onClick={() => {
+                    setIsContactModalOpen(true);
+                    setIsMenuOpen(false);
+                  }}
                   className="w-full border border-white bg-white text-black py-4 rounded-full font-semibold hover:bg-transparent hover:text-white transition-all text-sm tracking-wide"
                  >
                     Contatta il Team
