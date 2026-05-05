@@ -67,10 +67,10 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
   const inputClasses = "w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 md:py-4 text-white placeholder-white/30 focus:outline-none focus:border-[#06b6d4] focus:bg-white/10 transition-all font-light text-sm md:text-base";
 
   return (
-    <div className="fixed inset-0 z-[100] bg-[#050505] animate-in fade-in zoom-in-95 duration-300 overflow-y-auto w-full h-full" aria-modal="true">
+    <div className="fixed inset-0 z-[1001] bg-[#050505] animate-in fade-in zoom-in-95 duration-300 flex flex-col w-full h-[100dvh]" aria-modal="true">
       
-      {/* Header Mimic */}
-      <div className="sticky top-0 left-0 w-full px-6 pt-6 pb-4 z-10 flex justify-between items-center bg-[#050505]/90 backdrop-blur-md border-b border-white/5 shadow-md">
+      {/* Header Full Screen Black Mimic */}
+      <div className="flex-none w-full px-6 pt-6 pb-4 flex justify-between items-center bg-[#050505] border-b border-white/10 shadow-md relative z-10">
         {/* Minimal Logo */}
         <div className="flex items-center cursor-pointer">
           <img 
@@ -83,16 +83,18 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
         {/* Close Button styling like Burger */}
         <button 
           onClick={onClose}
-          className="p-3 rounded-full bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 transition-all shadow-[0_0_15px_rgba(0,0,0,0.5)] flex-shrink-0 text-white/80 hover:text-white"
+          className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-all flex-shrink-0 text-white/80 hover:text-white"
           aria-label="Close"
         >
           <X className="w-6 h-6" />
         </button>
       </div>
       
-      {/* Modal Content container - Respiro Bottom */}
-      <div className="w-full max-w-3xl mx-auto p-6 md:p-12 mb-24 mt-8 md:mt-12 bg-black/40 backdrop-blur-3xl border border-white/10 rounded-3xl shadow-2xl">
-        {isSuccess ? (
+      {/* Scrollable Content inside flex-1 to prevent double scrollbar */}
+      <div className="flex-1 w-full overflow-y-auto px-4 py-8 md:px-6 md:py-12 relative z-0">
+        {/* Inner container with breathing room at bottom */}
+        <div className="w-full max-w-3xl mx-auto p-6 md:p-12 pb-16 md:pb-20 mb-20 md:mb-32 bg-[#0a0a0a] border border-white/10 rounded-3xl shadow-2xl">
+          {isSuccess ? (
           <div className="flex flex-col items-center justify-center py-12 md:py-24 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="w-24 h-24 bg-green-500/20 rounded-full flex items-center justify-center mb-8">
               <CheckCircle2 className="w-12 h-12 text-green-400" />
@@ -193,5 +195,6 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
         )}
       </div>
     </div>
+  </div>
   );
 }
