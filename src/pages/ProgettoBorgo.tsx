@@ -220,7 +220,7 @@ export default function ProgettoBorgo() {
       <div className="fixed top-0 left-0 w-full h-32 bg-gradient-to-b from-black/90 via-black/50 to-transparent z-40 pointer-events-none"></div>
 
       {/* Global Header */}
-      <header className="fixed top-6 left-0 w-full px-6 z-50 flex justify-between items-center pointer-events-none">
+      <header className={`fixed top-6 left-0 w-full px-6 z-50 flex justify-between items-center pointer-events-none transition-opacity duration-500 ${isContactModalOpen ? 'opacity-0' : 'opacity-100'}`}>
           {/* Minimal Logo */}
           <Link href="/">
             <a className="mix-blend-difference pointer-events-auto flex items-center cursor-pointer">

@@ -1210,7 +1210,7 @@ export default function App() {
       <div className="fixed top-0 left-0 w-full h-32 bg-gradient-to-b from-black/90 via-black/50 to-transparent z-40 pointer-events-none"></div>
 
       {/* Global Header */}
-      <header className="fixed top-6 left-0 w-full px-6 z-50 flex justify-between items-center pointer-events-none">
+      <header className={`fixed top-6 left-0 w-full px-6 z-50 flex justify-between items-center pointer-events-none transition-opacity duration-500 ${isContactModalOpen ? 'opacity-0' : 'opacity-100'}`}>
           {/* Minimal Logo */}
           <div className="mix-blend-difference pointer-events-auto flex items-center">
             <img 
@@ -1320,7 +1320,7 @@ export default function App() {
       `}</style>
 
       {/* Global Scroll Indicator */}
-      <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 mix-blend-difference pointer-events-none transition-opacity duration-700 ${isIdle && !isAtEnd ? 'opacity-70' : 'opacity-0'}`}>
+      <div className={`fixed bottom-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 mix-blend-difference pointer-events-none transition-opacity duration-700 ${isIdle && !isAtEnd && !isContactModalOpen ? 'opacity-70' : 'opacity-0'}`}>
         <span className="text-[9px] uppercase tracking-[0.3em] font-mono text-white">Scroll</span>
         <div className="w-px h-12 bg-white/20 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1/2 bg-white animate-scrollDown"></div>
@@ -1328,7 +1328,7 @@ export default function App() {
       </div>
 
       {/* Global Vertical Timeline */}
-      <div className={`fixed right-3 md:right-8 top-1/2 -translate-y-1/2 z-[70] flex flex-col items-end gap-2 md:gap-3 pointer-events-none mix-blend-difference transition-opacity duration-700 ${!isIdle && !isAtEnd ? 'opacity-100' : 'opacity-0'}`}>
+      <div className={`fixed right-3 md:right-8 top-1/2 -translate-y-1/2 z-[70] flex flex-col items-end gap-2 md:gap-3 pointer-events-none mix-blend-difference transition-opacity duration-700 ${!isIdle && !isAtEnd && !isContactModalOpen ? 'opacity-100' : 'opacity-0'}`}>
         {[
           'hero-container', 'section-paradigma', 'section-3', 'section-4',
           'section-5', 'section-6', 'section-7', 'section-8',
